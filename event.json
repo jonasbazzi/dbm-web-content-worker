@@ -1,0 +1,9 @@
+{
+  "httpMethod": "GET",
+  "path": "/products",
+  "headers": {
+    "Accept": "application/json",
+    "Authorization": "testapikey"
+  },
+  "body": null
+}

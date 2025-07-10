@@ -1,0 +1,22 @@
+{
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "node-fetch": "^3.3.2"
+  },
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  },
+  "name": "dbm-be",
+  "version": "1.0.0",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
