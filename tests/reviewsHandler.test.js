@@ -1,24 +1,24 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { handler } from '../src/handler.js';
-import * as productService from '../src/productService.js';
+import { handler } from '../src/reviewsHandler.js';
+import * as reviewsService from '../src/reviewsService.js';
 import * as tokenValidation from '../src/tokenValidation.js';
 
 vi.mock('../src/tokenValidation.js', () => ({
   validateToken: vi.fn(),
 }));
 
-vi.mock('../src/productService.js', () => ({
-  fetchProducts: vi.fn(),
+vi.mock('../src/reviewsService.js', () => ({
+  fetchReviews: vi.fn(),
 }));
 
-describe('Lambda Handler', () => {
+describe('Reviews Lambda Handler', () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
-  it('returns 200 and products list when token is valid', async () => {
+  it('returns 200 and reviews list when token is valid', async () => {
     tokenValidation.validateToken.mockImplementation(() => { });
-    productService.fetchProducts.mockResolvedValue([{ id: 'item1' }, { id: 'item2' }]);
+    reviewsService.fetchReviews.mockResolvedValue([{ id: 'item1' }, { id: 'item2' }]);
 
     const event = {
       method: 'GET', headers: { Authorization: 'test-apikey', Origin: 'https://dbmmotos.com.ar' },
@@ -27,7 +27,7 @@ describe('Lambda Handler', () => {
     const result = await handler(event);
 
     expect(result.statusCode).toBe(200);
-    expect(JSON.parse(result.body).products).toHaveLength(2);
+    expect(JSON.parse(result.body).reviews).toHaveLength(2);
   });
 
   it('returns 401 when token is invalid', async () => {
@@ -43,7 +43,7 @@ describe('Lambda Handler', () => {
 
   it('returns 500 on unexpected error', async () => {
     tokenValidation.validateToken.mockImplementation(() => { });
-    productService.fetchProducts.mockImplementation(() => {
+    reviewsService.fetchReviews.mockImplementation(() => {
       throw new Error('Something broke');
     });
 
@@ -56,7 +56,6 @@ describe('Lambda Handler', () => {
   it('returns 403 when Origin header is missing or invalid', async () => {
     tokenValidation.validateToken.mockImplementation(() => { });
     const eventMissingOrigin = { method: 'GET', headers: { Authorization: 'test-apikey' } };
-
     const resultMissingOrigin = await handler(eventMissingOrigin);
     expect(resultMissingOrigin.statusCode).toBe(403);
 

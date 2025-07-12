@@ -22,10 +22,10 @@ describe('fetchProducts', () => {
     const mockProducts = { data: [{ id: 1, name: 'Test Motorcycle' }] };
 
     fetch.mockImplementation((url, options) => {
-      if (url.endsWith('/users/login')) {
+      if (url.endsWith('/dbm/auth')) {
         return Promise.resolve(new Response(JSON.stringify({ data: { token: mockToken } }), { status: 200 }));
       }
-      if (url.endsWith('/motorcycle/stock/website') && options.headers.Token === mockToken) {
+      if (url.endsWith('/dbm/products') && options.headers.Token === mockToken) {
         return Promise.resolve(new Response(JSON.stringify(mockProducts), { status: 200 }));
       }
       return Promise.resolve(new Response('Not Found', { status: 404 }));
@@ -37,7 +37,7 @@ describe('fetchProducts', () => {
 
   it('should return an empty array if auth fails', async () => {
     fetch.mockImplementation((url) => {
-      if (url.endsWith('/users/login')) {
+      if (url.endsWith('/dbm/auth')) {
         return Promise.resolve(new Response('Unauthorized', { status: 401 }));
       }
       return Promise.resolve(new Response(JSON.stringify({ data: [] }), { status: 200 }));
@@ -50,10 +50,10 @@ describe('fetchProducts', () => {
   it('should return an empty array if product fetch fails', async () => {
     const mockToken = 'test-token';
     fetch.mockImplementation((url, options) => {
-      if (url.endsWith('/users/login')) {
+      if (url.endsWith('/dbm/auth')) {
         return Promise.resolve(new Response(JSON.stringify({ data: { token: mockToken } }), { status: 200 }));
       }
-      if (url.endsWith('/motorcycle/stock/website')) {
+      if (url.endsWith('/dbm/products')) {
         return Promise.resolve(new Response('Internal Server Error', { status: 500 }));
       }
       return Promise.resolve(new Response('Not Found', { status: 404 }));

@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import 'dotenv/config';
+import './config.js';
 
 export async function getProductsAuthToken() {
   const url = `${process.env.DBM_BASE_URL}${process.env.DBM_AUTH_PATH}`;

@@ -1,8 +1,4 @@
-import dotenv from 'dotenv';
-
-if (process.env.ENV !== 'production') {
-  dotenv.config();
-}
+import './config.js';
 
 export function validateToken(headers) {
   const apiKey = headers['Authorization'];

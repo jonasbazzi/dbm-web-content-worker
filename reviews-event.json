@@ -1,0 +1,10 @@
+{
+  "httpMethod": "GET",
+  "path": "/reviews",
+  "headers": {
+    "Accept": "application/json",
+    "Authorization": "testapikey",
+    "Origin": "https://dbmmotos.com.ar"
+  },
+  "body": null
+}

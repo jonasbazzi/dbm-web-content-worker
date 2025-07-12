@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import 'dotenv/config';
+import './config.js';
 import { getProductsAuthToken } from './dbmAuth.js';
 
 export async function fetchProducts() {

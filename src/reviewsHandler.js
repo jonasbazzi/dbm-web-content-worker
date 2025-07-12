@@ -1,5 +1,5 @@
 import { validateToken } from './tokenValidation.js';
-import { fetchProducts } from './productService.js';
+import { fetchReviews } from './reviewsService.js';
 import { isOriginAllowed, getCorsHeaders, maybeHandleCorsPreflight } from "./cors.js"
 
 export const handler = async (event) => {
@@ -18,7 +18,7 @@ export const handler = async (event) => {
   try {
     validateToken(event.headers);
 
-    const products = await fetchProducts();
+    const reviews = await fetchReviews();
     const headers = {
       ...getCorsHeaders(origin),
       "Content-Type": "application/json",
@@ -28,12 +28,12 @@ export const handler = async (event) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        products: products,
+        reviews: reviews.slice(0, 10),
       }),
-      headers: headers,
+      headers: headers
     };
   } catch (err) {
-    console.error('Error fetching products:', err);
+    console.error('Error fetching reviews:', err);
     return { statusCode: err.statusCode || 500 };
   }
 };

@@ -5,7 +5,7 @@
     "node-fetch": "^3.3.2"
   },
   "scripts": {
-    "test": "vitest"
+    "test": "ENV=test vitest"
   },
   "devDependencies": {
     "vitest": "^3.2.4"

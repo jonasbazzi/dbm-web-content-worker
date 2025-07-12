@@ -3,7 +3,8 @@
   "path": "/products",
   "headers": {
     "Accept": "application/json",
-    "Authorization": "testapikey"
+    "Authorization": "testapikey",
+    "Origin": "https://dbmmotos.com.ar"
   },
   "body": null
 }

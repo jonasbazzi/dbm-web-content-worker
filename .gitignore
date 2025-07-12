@@ -97,7 +97,7 @@ web_modules/
 
 # dotenv environment variables file
 .env
-.env.test
+.lambda-env.json
 .env.production
 
 # parcel-bundler cache (https://parceljs.org/)
