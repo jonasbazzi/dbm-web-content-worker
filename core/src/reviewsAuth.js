@@ -1,11 +1,11 @@
 import fetch from 'node-fetch';
 import './config.js';
 
-export async function getReviewsToken() {
-  const username = process.env.REVIEWS_USERNAME;
-  const url = `${process.env.REVIEWS_AUTH_URL}?w=${username}&page=localhost:8080`;
-
+export async function getReviewsToken(env) {
   try {
+    const username = `${env.REVIEWS_USERNAME}`;
+    const url = `${env.REVIEWS_AUTH_URL}?w=${username}&page=localhost:8080`;
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -16,13 +16,12 @@ export async function getReviewsToken() {
     if (!response.ok) {
       const errorText = await response.text();
       console.error(
-        'Reviews Authentication API error:',
-        response.status, errorText
+        `Reviews Authentication API error: status=${response.status}` +
+        `, error=${errorText}`
       );
       return null;
     }
 
-    const username = process.env.REVIEWS_USERNAME;
     const data = await response.json();
     return data.data.widgets[username].data.public_widget_token;
   } catch (err) {

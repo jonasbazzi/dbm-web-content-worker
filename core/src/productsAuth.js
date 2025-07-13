@@ -1,14 +1,14 @@
 import fetch from 'node-fetch';
 import './config.js';
 
-export async function getProductsAuthToken() {
-  const url = `${process.env.DBM_BASE_URL}${process.env.DBM_AUTH_PATH}`;
-  const credentials = {
-    username: process.env.DBM_USERNAME,
-    password: process.env.DBM_PASSWORD,
-  };
-
+export async function getProductsAuthToken(env) {
   try {
+    const url = `${env.DBM_BASE_URL}${env.DBM_AUTH_PATH}`;
+    const credentials = {
+      username: env.DBM_USERNAME,
+      password: env.DBM_PASSWORD,
+    };
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -19,7 +19,7 @@ export async function getProductsAuthToken() {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('Authentication API error:', response.status, errorText);
+      console.error(`Authentication API error: ${response.status}, ${errorText}`);
       return null;
     }
 

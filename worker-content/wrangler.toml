@@ -1,0 +1,31 @@
+name = "dbm-content-renewal"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+compatibility_flags = [
+  "nodejs_compat"
+]
+
+[[r2_buckets]]
+binding = "WEB_BUCKET"
+bucket_name = "dbm-web"
+
+[vars]
+CORS_ENABLED = false
+CORS_ALLOWED_ORIGINS = "https://dbmmotos.com.ar,https://www.dbmmotos.com.ar,http://127.0.0.1:2704"
+API_KEY_ENABLED = false
+CONTENT_FILE_NAME = "dbm_content.json"
+ENV = "production"
+GOOGLE_MAPS_STORE_ID = ""
+REVIEWS_REVIEWS_URL = ""
+REVIEWS_AUTH_URL = ""
+REVIEWS_USERNAME = ""
+DBM_BASE_URL = ""
+DBM_PRODUCTS_PATH = ""
+DBM_AUTH_PATH = ""
+DBM_USERNAME = ""
+DBM_PASSWORD = ""
+API_KEY = ""
+
+[dev]
+port = 2704
+local_protocol = "http"

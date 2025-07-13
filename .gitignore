@@ -6,6 +6,10 @@
 [._]ss[a-gi-z]
 [._]sw[a-p]
 
+#Wrangler
+.dev.vars
+.wrangler/
+
 # Test
 tests/__snapshots__/
 
