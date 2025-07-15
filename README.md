@@ -6,7 +6,9 @@ npx wrangler dev worker-content/src/index.js
 ```
 
 ### Run Tests
+``` bash
 npm test
+```
 
 #### Install only production dependencies
 ```bash
