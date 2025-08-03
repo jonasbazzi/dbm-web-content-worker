@@ -26,75 +26,75 @@ describe('Content Renewal', () => {
     vi.resetAllMocks();
   });
 
-  it('should fetch products and reviews and store them', () => {
+  it('should fetch products and reviews and store them', async () => {
     const products = [{ id: 1, name: 'Product 1' }];
     const reviews = [{ id: 1, rating: 5 }];
     fetchProducts.mockReturnValue(products);
     fetchReviews.mockReturnValue(reviews);
     fetchJson.mockReturnValue(null);
 
-    renewContent(env);
+    await renewContent(env);
 
     expect(fetchProducts).toHaveBeenCalledWith(env);
     expect(fetchReviews).toHaveBeenCalledWith(env);
     expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products, reviews }), env);
   });
 
-  it('should use current products when fetchProducts returns null', () => {
+  it('should use current products when fetchProducts returns null', async () => {
     const currentProducts = [{ id: 2, name: 'Old Product' }];
     const reviews = [{ id: 1, rating: 5 }];
     fetchProducts.mockReturnValue(null);
     fetchReviews.mockReturnValue(reviews);
     fetchJson.mockReturnValue(JSON.stringify({ products: currentProducts, reviews: [] }));
 
-    renewContent(env);
+    await renewContent(env);
 
     expect(fetchProducts).toHaveBeenCalledWith(env);
     expect(fetchReviews).toHaveBeenCalledWith(env);
     expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products: currentProducts, reviews }), env);
   });
 
-  it('should use current reviews when fetchReviews returns null', () => {
+  it('should use current reviews when fetchReviews returns null', async () => {
     const products = [{ id: 1, name: 'Product 1' }];
     const currentReviews = [{ id: 2, rating: 4 }];
     fetchProducts.mockReturnValue(products);
     fetchReviews.mockReturnValue(null);
     fetchJson.mockReturnValue(JSON.stringify({ products: [], reviews: currentReviews }));
 
-    renewContent(env);
+    await renewContent(env);
 
     expect(fetchProducts).toHaveBeenCalledWith(env);
     expect(fetchReviews).toHaveBeenCalledWith(env);
     expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products, reviews: currentReviews }), env);
   });
 
-  it('should use current content when both fetchProducts and fetchReviews return null', () => {
+  it('should use current content when both fetchProducts and fetchReviews return null', async () => {
     const currentProducts = [{ id: 2, name: 'Old Product' }];
     const currentReviews = [{ id: 2, rating: 4 }];
     fetchProducts.mockReturnValue(null);
     fetchReviews.mockReturnValue(null);
     fetchJson.mockReturnValue(JSON.stringify({ products: currentProducts, reviews: currentReviews }));
 
-    renewContent(env);
+    await renewContent(env);
 
     expect(fetchProducts).toHaveBeenCalledWith(env);
     expect(fetchReviews).toHaveBeenCalledWith(env);
     expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products: currentProducts, reviews: currentReviews }), env);
   });
 
-  it('should use default content when fetchJson returns null', () => {
+  it('should use default content when fetchJson returns null', async () => {
     const products = [{ id: 1, name: 'Product 1' }];
     const reviews = [{ id: 1, rating: 5 }];
     fetchProducts.mockReturnValue(products);
     fetchReviews.mockReturnValue(reviews);
     fetchJson.mockReturnValue(null);
 
-    renewContent(env);
+    await renewContent(env);
 
     expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products, reviews }), env);
   });
 
-  it('should use default content when fetchJson throws an error', () => {
+  it('should use default content when fetchJson throws an error', async () => {
     const products = [{ id: 1, name: 'Product 1' }];
     const reviews = [{ id: 1, rating: 5 }];
     fetchProducts.mockReturnValue(products);
@@ -103,19 +103,19 @@ describe('Content Renewal', () => {
       throw new Error('File not found');
     });
 
-    renewContent(env);
+    await renewContent(env);
 
     expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products, reviews }), env);
   });
 
-  it('should use default content when fetchJson returns invalid JSON', () => {
+  it('should use default content when fetchJson returns invalid JSON', async () => {
     const products = [{ id: 1, name: 'Product 1' }];
     const reviews = [{ id: 1, rating: 5 }];
     fetchProducts.mockReturnValue(products);
     fetchReviews.mockReturnValue(reviews);
     fetchJson.mockReturnValue('invalid json');
 
-    renewContent(env);
+    await renewContent(env);
 
     expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products, reviews }), env);
   });

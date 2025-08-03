@@ -1,0 +1,9 @@
+me = "dbm-dump"
+main = "src/index.ts"
+compatibility_date = "2025-07-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dbm"
+database_id = "6261fdfb-b12d-4c87-8702-11d58040dd92"
+

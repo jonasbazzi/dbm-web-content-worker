@@ -2,7 +2,7 @@
 
 ### Test Worker
 ```bash
-npx wrangler dev worker-content/src/index.js
+npx wrangler dev worker-content-renewal/src/index.js
 ```
 
 ### Run Tests
@@ -24,7 +24,7 @@ wrangler login
 
 #### Deploy
 ```bash
-cd worker-content
+cd worker-content-renewal
 npm install --only=prod
 npx wrangler deploy
 ```

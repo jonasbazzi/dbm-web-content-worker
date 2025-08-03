@@ -19,3 +19,6 @@ ENV = "production"
 [dev]
 port = 2704
 local_protocol = "http"
+  
+[triggers]
+crons = ["0 2 * * *"]

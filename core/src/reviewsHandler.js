@@ -13,7 +13,7 @@ export const handler = async (event, env) => {
   try {
     validateAuth(event.headers, env);
 
-    const reviews = fetchReviews(env);
+    const reviews = await fetchReviews(env);
     const headers = {
       ...cors.getCorsHeaders(event),
       "Content-Type": "application/json",

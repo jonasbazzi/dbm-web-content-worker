@@ -9,6 +9,7 @@
 #Wrangler
 .dev.vars
 .wrangler/
+*/.wrangler/
 
 # Test
 tests/__snapshots__/
