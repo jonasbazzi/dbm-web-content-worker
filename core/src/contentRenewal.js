@@ -9,8 +9,8 @@ export async function renewContent(env) {
   const updatedReviews = await fetchReviews(env);
 
   const newContent = {
-    products: updatedProducts ?? currentContent.products,
-    reviews: updatedReviews ?? currentContent.reviews,
+    products: updatedProducts?.length ? updatedProducts : currentContent.products,
+    reviews: updatedReviews?.length ? updatedReviews : currentContent.reviews,
   }
   await storeNewContent(newContent, env);
   invalidateCache();

@@ -119,4 +119,32 @@ describe('Content Renewal', () => {
 
     expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products, reviews }), env);
   });
+
+  it('should use current products when fetchProducts returns an empty array', async () => {
+    const currentProducts = [{ id: 2, name: 'Old Product' }];
+    const reviews = [{ id: 1, rating: 5 }];
+    fetchProducts.mockReturnValue([]);
+    fetchReviews.mockReturnValue(reviews);
+    fetchJson.mockReturnValue(JSON.stringify({ products: currentProducts, reviews: [] }));
+
+    await renewContent(env);
+
+    expect(fetchProducts).toHaveBeenCalledWith(env);
+    expect(fetchReviews).toHaveBeenCalledWith(env);
+    expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products: currentProducts, reviews }), env);
+  });
+
+  it('should use current reviews when fetchReviews returns an empty array', async () => {
+    const products = [{ id: 1, name: 'Product 1' }];
+    const currentReviews = [{ id: 2, rating: 4 }];
+    fetchProducts.mockReturnValue(products);
+    fetchReviews.mockReturnValue([]);
+    fetchJson.mockReturnValue(JSON.stringify({ products: [], reviews: currentReviews }));
+
+    await renewContent(env);
+
+    expect(fetchProducts).toHaveBeenCalledWith(env);
+    expect(fetchReviews).toHaveBeenCalledWith(env);
+    expect(storeFile).toHaveBeenCalledWith(env.CONTENT_FILE_NAME, JSON.stringify({ products, reviews: currentReviews }), env);
+  });
 });
